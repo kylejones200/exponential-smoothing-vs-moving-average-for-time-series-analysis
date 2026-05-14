@@ -1,7 +1,7 @@
 # Exponential Smoothing vs Moving Average for Time Series Analysis
 
-**Published:** 2025-02-19
-**Medium:** [https://medium.com/@kyle-t-jones/exponential-smoothing-vs-moving-average-for-time-series-analysis-340d0e7fc389](https://medium.com/@kyle-t-jones/exponential-smoothing-vs-moving-average-for-time-series-analysis-340d0e7fc389)
+Published: 2025-02-19
+Medium: [https://medium.com/@kyle-t-jones/exponential-smoothing-vs-moving-average-for-time-series-analysis-340d0e7fc389](https://medium.com/@kyle-t-jones/exponential-smoothing-vs-moving-average-for-time-series-analysis-340d0e7fc389)
 
 ## About
 
