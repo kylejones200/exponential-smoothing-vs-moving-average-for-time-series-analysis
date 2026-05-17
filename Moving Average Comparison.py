@@ -51,7 +51,7 @@ def geometric_moving_average(series, window):
     return series.rolling(window).apply(lambda x: np.prod(x) ** (1 / window), raw=True)
 
 
-def main() -> None:
+def example_time_series_data() -> None:
     data = [10, 12, 14, 13, 15, 16, 14, 13, 17, 18]
 
     df = pd.DataFrame({"Value": data})
@@ -74,6 +74,8 @@ def main() -> None:
 
     plt.show()
 
+
+def calculate_3_point_geometric_moving_average() -> None:
     df["GMA"] = geometric_moving_average(df["Value"], window=3)
 
     plt.plot(df["Value"], label="Original Data")
@@ -92,6 +94,8 @@ def main() -> None:
 
     plt.show()
 
+
+def calculate_exponentially_weighted_moving_average() -> None:
     df["EWMA"] = df["Value"].ewm(alpha=0.3).mean()
 
     plt.plot(df["Value"], label="Original Data")
@@ -110,6 +114,8 @@ def main() -> None:
 
     plt.show()
 
+
+def example_time_series_data_2() -> None:
     data = [10, 12, 14, 13, 15, 16, 14, 13, 17, 18]
 
     df = pd.DataFrame({"Value": data})
@@ -142,6 +148,8 @@ def main() -> None:
 
     plt.show()
 
+
+def generate_more_realistic_simulated_data() -> None:
     np.random.seed(42)
 
     n_points = 100
@@ -178,6 +186,8 @@ def main() -> None:
 
     plt.show()
 
+
+def generate_realistic_price_data_that_mimics_stock() -> None:
     n_days = 200
 
     dates = pd.date_range(start="2023-01-01", periods=n_days, freq="D")
@@ -287,6 +297,15 @@ def main() -> None:
     total_return = (1 + df["Strategy_Returns"].fillna(0)).prod() - 1
 
     print(f"Strategy Total Return: {total_return:.2%}")
+
+
+def main() -> None:
+    example_time_series_data()
+    calculate_3_point_geometric_moving_average()
+    calculate_exponentially_weighted_moving_average()
+    example_time_series_data_2()
+    generate_more_realistic_simulated_data()
+    generate_realistic_price_data_that_mimics_stock()
 
 
 if __name__ == "__main__":
