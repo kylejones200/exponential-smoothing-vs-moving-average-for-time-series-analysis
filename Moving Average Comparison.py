@@ -53,173 +53,100 @@ def geometric_moving_average(series, window):
 
 def example_time_series_data() -> None:
     data = [10, 12, 14, 13, 15, 16, 14, 13, 17, 18]
-
     df = pd.DataFrame({"Value": data})
-
     df["AMA"] = df["Value"].rolling(window=3).mean()
-
     plt.plot(df["Value"], label="Original Data")
-
     plt.plot(df["AMA"], label="Arithmetic Moving Average", linestyle="--")
-
     plt.title("Arithmetic Moving Average")
-
     plt.xlabel("Time")
-
     plt.ylabel("Value")
-
     plt.legend()
-
     plt.savefig("Arithmetic Moving Average.png")
-
     plt.show()
 
 
 def calculate_3_point_geometric_moving_average() -> None:
     df["GMA"] = geometric_moving_average(df["Value"], window=3)
-
     plt.plot(df["Value"], label="Original Data")
-
     plt.plot(df["GMA"], label="Geometric Moving Average", linestyle="--")
-
     plt.title("Geometric Moving Average")
-
     plt.xlabel("Time")
-
     plt.ylabel("Value")
-
     plt.legend()
-
     plt.savefig("Geometric Moving Average.png")
-
     plt.show()
 
 
 def calculate_exponentially_weighted_moving_average() -> None:
     df["EWMA"] = df["Value"].ewm(alpha=0.3).mean()
-
     plt.plot(df["Value"], label="Original Data")
-
     plt.plot(df["EWMA"], label="Exponentially Weighted Moving Average", linestyle="--")
-
     plt.title("Exponentially Weighted Moving Average")
-
     plt.xlabel("Time")
-
     plt.ylabel("Value")
-
     plt.legend()
-
     plt.savefig("Exponentially Weighted Moving Average.png")
-
     plt.show()
 
 
 def example_time_series_data_2() -> None:
     data = [10, 12, 14, 13, 15, 16, 14, 13, 17, 18]
-
     df = pd.DataFrame({"Value": data})
-
     df["AMA"] = df["Value"].rolling(window=3).mean()
-
     df["GMA"] = geometric_moving_average(df["Value"], window=3)
-
     df["EWMA"] = df["Value"].ewm(alpha=0.3).mean()
-
     plt.figure(figsize=(10, 6))
-
     plt.plot(df["Value"], label="Original Data")
-
     plt.plot(df["AMA"], label="Arithmetic Moving Average", linestyle="--")
-
     plt.plot(df["GMA"], label="Geometric Moving Average", linestyle=":")
-
     plt.plot(df["EWMA"], label="Exponentially Weighted Moving Average", linestyle="-.")
-
     plt.title("Comparison of Different Moving Averages")
-
     plt.xlabel("Time")
-
     plt.ylabel("Value")
-
     plt.legend()
-
     plt.savefig("Combined_Moving_Averages.png")
-
     plt.show()
 
 
 def generate_more_realistic_simulated_data() -> None:
     np.random.seed(42)
-
     n_points = 100
-
     time = np.linspace(0, 10, n_points)
-
     base = 10 + np.sin(time) * 5
-
     trend = time * 0.5
-
     noise = np.random.normal(0, 0.5, n_points)
-
     data = base + trend + noise
-
     df = pd.DataFrame({"Value": data})
-
     window_size = 5
-
     df["AMA"] = df["Value"].rolling(window=window_size).mean()
-
     df["GMA"] = geometric_moving_average(df["Value"], window=window_size)
-
     df["EWMA"] = df["Value"].ewm(alpha=0.3).mean()
-
     fig = plt.figure(figsize=(15, 10))
-
-    gs = GridSpec(2, 3, height_ratios=[2, 1])
-
+    GridSpec(2, 3, height_ratios=[2, 1])
     anim = FuncAnimation(
         fig, animate, frames=range(window_size, len(df)), interval=100, repeat=False
     )
-
     anim.save("moving_averages_animation.gif", writer="pillow")
-
     plt.show()
 
 
 def generate_realistic_price_data_that_mimics_stock() -> None:
     n_days = 200
-
     dates = pd.date_range(start="2023-01-01", periods=n_days, freq="D")
-
     prices = generate_stock_data(n_days)
-
     df = pd.DataFrame({"Date": dates, "Price": prices})
-
     df["SMA20"] = df["Price"].rolling(window=20).mean()
-
     df["SMA50"] = df["Price"].rolling(window=50).mean()
-
     df["Signal"] = 0
-
     df.loc[df["SMA20"] > df["SMA50"], "Signal"] = 1
-
     df.loc[df["SMA20"] < df["SMA50"], "Signal"] = -1
-
     df["Crossover"] = df["Signal"].diff()
-
     plt.figure(figsize=(15, 10))
-
     plt.subplot(2, 1, 1)
-
     plt.plot(df["Date"], df["Price"], label="Price", alpha=0.7, color="gray")
-
     plt.plot(df["Date"], df["SMA20"], label="20-day SMA", color="blue")
-
     plt.plot(df["Date"], df["SMA50"], label="50-day SMA", color="red")
-
     buy_signals = df[df["Crossover"] == 2]
-
     plt.scatter(
         buy_signals["Date"],
         buy_signals["Price"],
@@ -228,9 +155,7 @@ def generate_realistic_price_data_that_mimics_stock() -> None:
         s=100,
         label="Buy Signal",
     )
-
     sell_signals = df[df["Crossover"] == -2]
-
     plt.scatter(
         sell_signals["Date"],
         sell_signals["Price"],
@@ -239,15 +164,10 @@ def generate_realistic_price_data_that_mimics_stock() -> None:
         s=100,
         label="Sell Signal",
     )
-
     plt.title("Moving Average Crossover Strategy")
-
     plt.legend()
-
     plt.grid(True)
-
     plt.subplot(2, 1, 2)
-
     plt.fill_between(
         df["Date"],
         (df["SMA20"] - df["SMA50"]) / df["SMA50"] * 100,
@@ -257,7 +177,6 @@ def generate_realistic_price_data_that_mimics_stock() -> None:
         alpha=0.3,
         label="Bullish Divergence",
     )
-
     plt.fill_between(
         df["Date"],
         (df["SMA20"] - df["SMA50"]) / df["SMA50"] * 100,
@@ -267,35 +186,20 @@ def generate_realistic_price_data_that_mimics_stock() -> None:
         alpha=0.3,
         label="Bearish Divergence",
     )
-
     plt.axhline(y=0, color="black", linestyle="-", alpha=0.3)
-
     plt.title("Signal Strength (% Difference between SMAs)")
-
     plt.legend()
-
     plt.grid(True)
-
     plt.tight_layout()
-
     plt.savefig("moving_average_crossover.png")
-
     plt.show()
-
     buy_signals_count = len(buy_signals)
-
     sell_signals_count = len(sell_signals)
-
     print("\nTrading Summary:")
-
     print(f"Number of Buy Signals: {buy_signals_count}")
-
     print(f"Number of Sell Signals: {sell_signals_count}")
-
     df["Strategy_Returns"] = df["Signal"].shift(1) * df["Price"].pct_change()
-
     total_return = (1 + df["Strategy_Returns"].fillna(0)).prod() - 1
-
     print(f"Strategy Total Return: {total_return:.2%}")
 
 
